@@ -22,7 +22,6 @@ axis_y = np.linspace(0, WIDTH, WIDTH * 10)  # 对宽[0,WIDTH]间隔取WIDTH*10�
 # 圆心
 centers = [(x, y) for x in axis_x
            for y in axis_y]
-
 # 随机生成障碍点
 for i in range(DOTS_NUM):
     dots_x.append(random.uniform(0, LENGTH))
@@ -36,27 +35,33 @@ for i in range(DOTS_NUM):
 def distance(x, y, a, b):
     return math.sqrt((x - a) * (x - a) + (y - b) * (y - b))
 
+#没有计算圆与圆的情况，这里得到的是dis_min中装满了对应圆的半径
 
-dis_min = []  # 存每个圆心到障碍点/边界距离中的最小值
-center_tem = []  # 存每个圆心的坐标
-for x, y in centers:  # 遍历每个圆心
-    dis = []  # 圆心到障碍点/边界的距离
-    for a, b in dots:  # 遍历每个障碍点
-        dis.append(distance(x, y, a, b))  # 求当前圆心到每个障碍点的距离
-    dis = dis + [x, y, LENGTH - x, WIDTH - y]  # 加上圆心到边界的距离
-    # print(dis)
-    dis_min.append(min(dis))  # 取当前圆心到障碍点/边界距离中的最小值，作为当前圆心对应的半径
-    # print(dis_min)
-    center_tem.append((x, y))  # 记录下当前圆心的坐标
-    # print(center_tem)
+center_tem=[]   #存已经确定的最大圆
+for i in range(1,CENTER_NUM+1):
+    dis_min = []  # 存每个圆心到障碍点/边界距离中的最小值
+    for x, y in centers:  # 遍历每个圆心
+        dis = []  # 圆心到障碍点/边界的距离
+        for a, b in dots:  # 遍历每个障碍点
+            dis.append(distance(x, y, a, b))  # 求当前圆心到每个障碍点的距离
+        dis = dis + [x, y, LENGTH - x, WIDTH - y]  # 加上圆心到边界的距离
+        if center_tem:  #如果已经有圆存在
+            for a,b in center_tem:  #遍历每个已经存在的圆
+                i=0                    #radii中的半径和center_tem中的圆是一一对应的，这里图方便弄了个索引i
+                dis.append(distance(x,y,a,b)-radii[i])   #到每个已经存在的圆的距离
+                i=i+1
+        # print(dis)
+        dis_min.append(min(dis))  # 取当前圆心到障碍点/边界距离中的最小值，作为当前圆心对应的半径
+        # print(dis_min)
 
-indices = np.argsort(dis_min)[-CENTER_NUM:]  # 取dis_min中前CENTER_NUM大元素的索引
+    indices = np.argsort(dis_min)[-1:]  # 取dis_min中最大圆的索引，一次只画一个圆
 
-for i in indices:
-    center = center_tem[i]
-    center_x.append(center[0])
-    center_y.append(center[1])
-    radii.append(dis_min[i])
+    #indices是索引数组，所以取indices[0]得到整数索引
+    center_x.append(centers[indices[0]][0])
+    center_y.append(centers[indices[0]][1])
+    radii.append(dis_min[indices[0]])
+    center_tem.append(centers[indices[0]])  #新得到的最大圆
+    centers.pop(indices[0])    #画出的圆就不继续遍历了
 
 colors = ['blue', 'yellow', 'pink']
 for i in range(len(radii)):  # 遍历前CENTER_NUM个圆
