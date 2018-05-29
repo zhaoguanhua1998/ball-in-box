@@ -4,9 +4,13 @@ import random
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 
-LENGTH = 13  # 长方形的长
-WIDTH = 5  # 长方形的宽
-BLOCKERS_NUM = 10  # 默认障碍点个数
+MARGIN_LEFT_X = -1  # 左边界横坐标
+MARGIN_RIGHT_X = 1  # 右边界横坐标
+MARGIN_UP_Y = 1  # 上边界横坐标
+MARGIN_DOWN_Y = -1  # 下边界横坐标
+LENGTH = MARGIN_RIGHT_X - MARGIN_LEFT_X  # 长
+WIDTH = MARGIN_UP_Y - MARGIN_DOWN_Y  # 宽
+BLOCKERS_NUM = 4  # 默认障碍点个数
 CIRCLE_NUM = 3  # 圆的个数
 BLOCKERS_X = []  # 随机障碍点横坐标
 BLOCKERS_Y = []  # 随机障碍点纵坐标
@@ -14,8 +18,8 @@ BLOCKERS = []  # 随机障碍点
 
 # 随机生成默认障碍点
 for block in range(BLOCKERS_NUM):
-    BLOCKERS_X.append(random.uniform(0, LENGTH))
-    BLOCKERS_Y.append(random.uniform(0, WIDTH))
+    BLOCKERS_X.append(random.uniform(MARGIN_LEFT_X, MARGIN_RIGHT_X))
+    BLOCKERS_Y.append(random.uniform(MARGIN_DOWN_Y, MARGIN_UP_Y))
     BLOCKERS.append((BLOCKERS_X[block], BLOCKERS_Y[block]))
 
 
@@ -35,8 +39,9 @@ def ball_in_box(m=CIRCLE_NUM, blockers=BLOCKERS):
     center_x = []  # 圆心横坐标
     center_y = []  # 圆心纵坐标
     radii = []  # 圆的半径
-    axis_x = np.linspace(0, LENGTH, LENGTH * 10)  # 对长[0,LENGTH]间隔取LENGTH*10个点
-    axis_y = np.linspace(0, WIDTH, WIDTH * 10)  # 对宽[0,WIDTH]间隔取WIDTH*10个点
+    axis_x = np.linspace(MARGIN_LEFT_X, MARGIN_RIGHT_X,
+                         LENGTH * 10)  # 对长[MARGIN_LEFT_X, MARGIN_RIGHT_X]间隔取LENGTH*10个点
+    axis_y = np.linspace(MARGIN_DOWN_Y, MARGIN_UP_Y, WIDTH * 10)  # 对宽[MARGIN_DOWN_Y, MARGIN_UP_Y]间隔取WIDTH*10个点
     centers = [(x, y) for x in axis_x
                for y in axis_y]  # 圆心
 
@@ -56,7 +61,7 @@ def ball_in_box(m=CIRCLE_NUM, blockers=BLOCKERS):
             dis = []  # 圆心到障碍点/边界的距离
             for a, b in blockers:  # 遍历每个障碍点
                 dis.append(distance(x, y, a, b))  # 求当前圆心到每个障碍点的距离
-            dis = dis + [x, y, LENGTH - x, WIDTH - y]  # 加上圆心到边界的距离
+            dis = dis + [x - MARGIN_LEFT_X, y - MARGIN_DOWN_Y, MARGIN_RIGHT_X - x, MARGIN_UP_Y - y]  # 加上圆心到边界的距离
             if center_tem:  # 如果已经有圆存在
                 for a, b in center_tem:  # 遍历每个已经存在的圆
                     i = 0  # radii中的半径和center_tem中的圆是一一对应的，这里图方便弄了个索引i
@@ -80,10 +85,12 @@ def ball_in_box(m=CIRCLE_NUM, blockers=BLOCKERS):
 
     fig = plt.figure()
     ax = fig.add_subplot(111)  # 将画布分割为1行1列，取第1块
+    ax.set_xlim(MARGIN_LEFT_X, MARGIN_RIGHT_X)
+    ax.set_ylim(MARGIN_DOWN_Y, MARGIN_UP_Y)
     ax.set_aspect(1)  # 坐标轴单位为1
     ax.plot(blockers_x, blockers_y, 'gx')  # 画障碍点
     ax.plot(center_x, center_y, 'ro')  # 画圆心
-    ax.axis([0, LENGTH, 0, WIDTH])
+    # ax.axis([0, LENGTH, 0, WIDTH])
     for i in range(len(radii)):
         ax.add_patch(cir_fig[i])  # 画圆
     plt.show()
@@ -93,4 +100,5 @@ def ball_in_box(m=CIRCLE_NUM, blockers=BLOCKERS):
 
 # test:
 
-print(ball_in_box(m=6))
+print(ball_in_box(m=3))
+print(ball_in_box(m=5, blockers=[(0.5, 0.5), (0.5, -0.5), (0.5, 0.3)]))
