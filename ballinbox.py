@@ -98,7 +98,14 @@ def ball_in_box(m=CIRCLE_NUM, blockers=BLOCKERS):
     return circle  # 返回圆心坐标与半径
 
 
-# test:
+# test1:
+print(ball_in_box(m=4))
+print(ball_in_box(m=4,blockers=[(0.4,0.4),(0.8,-0.6),(-0.4,-0.3)]))
 
+# test2:
+print(ball_in_box(m=5))
+print(ball_in_box(m=5,blockers=[(-0.5,-0.4),(1,0.5),(-0.2,0.8)]))
+
+#test3:
 print(ball_in_box(m=3))
-print(ball_in_box(m=5, blockers=[(0.5, 0.5), (0.5, -0.5), (0.5, 0.3)]))
+print(ball_in_box(m=3,blockers=[(-0.2,0.5),(0.7,0.7),(0.5,0.5)]))
