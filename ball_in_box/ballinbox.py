@@ -40,8 +40,8 @@ def ball_in_box(m=CIRCLE_NUM, blockers=BLOCKERS):
     center_y = []  # 圆心纵坐标
     radii = []  # 圆的半径
     axis_x = np.linspace(MARGIN_LEFT_X, MARGIN_RIGHT_X,
-                         LENGTH * 100)  # 对长[MARGIN_LEFT_X, MARGIN_RIGHT_X]间隔取LENGTH*10个点
-    axis_y = np.linspace(MARGIN_DOWN_Y, MARGIN_UP_Y, WIDTH * 100)  # 对宽[MARGIN_DOWN_Y, MARGIN_UP_Y]间隔取WIDTH*10个点
+                         LENGTH * 500)  # 对长[MARGIN_LEFT_X, MARGIN_RIGHT_X]间隔取LENGTH*10个点
+    axis_y = np.linspace(MARGIN_DOWN_Y, MARGIN_UP_Y, WIDTH * 500)  # 对宽[MARGIN_DOWN_Y, MARGIN_UP_Y]间隔取WIDTH*10个点
     centers = [(x, y) for x in axis_x
                for y in axis_y]  # 圆心
 
