@@ -19,6 +19,3 @@ start to code with Python.
 use git to store your coding progress and document.
 
 ********************************************************************************************************************
-user story:
-
-As a housewife,I want to know how many balls I can put into the box,so that I can store more things.
