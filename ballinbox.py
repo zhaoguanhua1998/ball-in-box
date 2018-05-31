@@ -63,10 +63,10 @@ def ball_in_box(m=CIRCLE_NUM, blockers=BLOCKERS):
                 dis.append(distance(x, y, a, b))  # 求当前圆心到每个障碍点的距离
             dis = dis + [x - MARGIN_LEFT_X, y - MARGIN_DOWN_Y, MARGIN_RIGHT_X - x, MARGIN_UP_Y - y]  # 加上圆心到边界的距离
             if center_tem:  # 如果已经有圆存在
-				i = 0  # radii中的半径和center_tem中的圆是一一对应的，这里图方便弄了个索引i
-                for a, b in center_tem:  # 遍历每个已经存在的圆
-                    dis.append(distance(x, y, a, b) - radii[i])  # 到每个已经存在的圆的距离
-                    i = i + 1
+                i = 0  # radii中的半径和center_tem中的圆是一一对应的，这里图方便弄了个索引i
+            for a, b in center_tem:  # 遍历每个已经存在的圆
+                dis.append(distance(x, y, a, b) - radii[i])  # 到每个已经存在的圆的距离
+                i = i + 1
             dis_min.append(min(dis))  # 取当前圆心到障碍点/边界距离中的最小值，作为当前圆心对应的半径
 
         indices = np.argsort(dis_min)[-1:]  # 取dis_min中最大圆的索引，一次只画一个圆
@@ -97,8 +97,7 @@ def ball_in_box(m=CIRCLE_NUM, blockers=BLOCKERS):
 
     return circle  # 返回圆心坐标与半径
 
-
-# # test1:第一次测试，设随机障碍点的坐标分别为(0.4,0.4) (0.8,-0.6) (-0.4,-0.3)；圆的个数为4个，返回函数值 
+# # test1:第一次测试，设随机障碍点的坐标分别为(0.4,0.4) (0.8,-0.6) (-0.4,-0.3)；圆的个数为4个，返回函数值
 # print(ball_in_box(m=4))
 # print(ball_in_box(m=4,blockers=[(0.4,0.4),(0.8,-0.6),(-0.4,-0.3)]))
 
