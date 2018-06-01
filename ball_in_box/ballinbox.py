@@ -2,7 +2,7 @@ import numpy as np
 import math
 import random
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
+# from matplotlib.patches import Circle
 
 MARGIN_LEFT_X = -1  # 左边界横坐标
 MARGIN_RIGHT_X = 1  # 右边界横坐标
