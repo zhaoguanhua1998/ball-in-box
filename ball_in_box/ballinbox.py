@@ -81,7 +81,7 @@ def ball_in_box(m=CIRCLE_NUM, blockers=BLOCKERS):
     colors = ['blue', 'yellow', 'pink', 'chartreuse', 'darkviolet', 'crimson']
     for i in range(len(radii)):  # 遍历前CIRCLE_NUM个圆
         circle.append((center_x[i], center_y[i], radii[i]))
-        cir_fig.append(Circle(xy=(center_x[i], center_y[i]), radius=radii[i], facecolor=colors[i], alpha=0.5))
+        # cir_fig.append(Circle(xy=(center_x[i], center_y[i]), radius=radii[i], facecolor=colors[i], alpha=0.5))
 
     # fig = plt.figure()
     # ax = fig.add_subplot(111)  # 将画布分割为1行1列，取第1块
