@@ -1,7 +1,7 @@
 import numpy as np
 import math
 import random
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 # from matplotlib.patches import Circle
 
 MARGIN_LEFT_X = -1  # 左边界横坐标
